@@ -18,13 +18,17 @@
     // // Fill with gradient
     // ctx.fillStyle = grd;
     // ctx.fillRect(10,10,150,80);
-    var centerX = c.width / 2;
-    var centerY = c.height / 2;
-    var radius = 70;
+    // var centerX = c.width / 2;
+    // var centerY = c.height / 2;
+    // var radius = 70;
 
-    c.beginPath();
-    c.arc(95,50,40,0,2*Math.PI);
-    c.stroke();
+    ctx.beginPath();
+    ctx.arc(95,50,40,0,2*Math.PI);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#003300';
+    ctx.stroke();
 
     ////
     // var i = 0;
