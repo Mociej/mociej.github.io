@@ -19,6 +19,14 @@
     // Fill with gradient
     ctx.fillStyle = grd;
     ctx.fillRect(10,10,150,80);
+    var i = 0;
+    function change() {
+    var doc = document.getElementById("canvas1");
+    var color = ["blue", "green"];
+        c.style.backgroundColor = color[i];
+    i = (i + 1) % color.length;
+    }
+    setInterval(change, 1000);
     </script>
     
 </body>
