@@ -8,7 +8,7 @@
 
 <canvas id="canvas1" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
 <canvas id="canvas2" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
-   
+<canvas id="canvas3" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>  
     <script>
     var c = document.getElementById("canvas1");
     var ctx = c.getContext("2d");
@@ -50,6 +50,23 @@
         i2 = (i2 + 1) % color2.length;
     }
     setInterval(change2, 1000);
+
+    var c3 = document.getElementById("canvas3");
+    var ctx3 = c3.getContext("2d");
+    var i3 = 0;
+    function change3() {
+        var color3 = ["green", "blue"];
+
+        ctx3.beginPath();
+        ctx3.arc(100, 75, 50, 0, 2 * Math.PI);
+        ctx3.fillStyle = color3[i];
+        ctx3.fill();
+        ctx3.stroke();
+
+        i3 = (i3 + 1) % color3.length;
+    }
+    setInterval(change3, 1000);
+
     </script>
     
 </body>
