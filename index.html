@@ -18,6 +18,20 @@
     // // Fill with gradient
     // ctx.fillStyle = grd;
     // ctx.fillRect(10,10,150,80);
+    var centerX = c.width / 2;
+      var centerY = c.height / 2;
+      var radius = 70;
+
+      context.beginPath();
+      context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+      context.fillStyle = 'green';
+      context.fill();
+      context.lineWidth = 5;
+      context.strokeStyle = '#003300';
+      context.stroke();
+
+
+    ////
     var i = 0;
     function change() {
     var c = document.getElementById("canvas1");
