@@ -30,15 +30,14 @@
     // ctx.strokeStyle = '#003300';
     ctx.stroke();
 
-    ////
-    // var i = 0;
-    // function change() {
-    // var c = document.getElementById("canvas1");
-    // var color = ["blue", "green"];
-    //     c.style.backgroundColor = color[i];
-    // i = (i + 1) % color.length;
-    // }
-    // setInterval(change, 1000);
+    //
+    var i = 0;
+    function change() {
+        var color = ["blue", "green"];
+        ctx.fillStyle = color[i];
+        i = (i + 1) % color.length;
+    }
+    setInterval(change, 1000);
     </script>
     
 </body>
