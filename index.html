@@ -4,7 +4,7 @@
 
 <h1>PMOB</h1>
 
-<p>Canvas 1</p>
+<p>Canvas 12</p>
 
 <canvas id="canvas1" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
     
@@ -22,19 +22,25 @@
     // var centerY = c.height / 2;
     // var radius = 70;
 
-    ctx.beginPath();
-    ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-    ctx.fillStyle = 'green';
-    ctx.fill();
-    // ctx.lineWidth = 5;
-    // ctx.strokeStyle = '#003300';
-    ctx.stroke();
+    // ctx.beginPath();
+    // ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+    // ctx.fillStyle = 'green';
+    // ctx.fill();
+    // // ctx.lineWidth = 5;
+    // // ctx.strokeStyle = '#003300';
+    // ctx.stroke();
 
     //
     var i = 0;
     function change() {
-        var color = ["blue", "green"];
+        var color = ["green", "blue"];
+
+        ctx.beginPath();
+        ctx.arc(100, 75, 50, 0, 2 * Math.PI);
         ctx.fillStyle = color[i];
+        ctx.fill();
+        ctx.stroke();
+
         i = (i + 1) % color.length;
     }
     setInterval(change, 1000);
