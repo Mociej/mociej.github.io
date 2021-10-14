@@ -4,70 +4,9 @@
 
 <h1>PMOB</h1>
 
-<p>Canvas 1</p>
+<p>Animacja 1</p>
 
 <canvas id="canvas1" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
-<canvas id="canvas2" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
-<canvas id="canvas3" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>  
-    <script>
-    var c = document.getElementById("canvas1");
-    var ctx = c.getContext("2d");
-    var i = 0;
-    function change() {
-        var color = ["green", "blue"];
-
-        ctx.beginPath();
-        ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx.fillStyle = color[i];
-        ctx.fill();
-        ctx.stroke();
-
-        i = (i + 1) % color.length;
-    }
-    setInterval(change, 1000);
-
-    var c2 = document.getElementById("canvas2");
-    var ctx2 = c2.getContext("2d");
-
-    var grd = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
-    grd.addColorStop(0, "green");
-    grd.addColorStop(1, "blue");
-
-    var grd2 = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
-    grd2.addColorStop(0, "blue");
-    grd2.addColorStop(1, "green");
-
-    var i2 = 0;
-    function change2() {
-        var color2 = [grd, grd2];
-
-        ctx2.beginPath();
-        ctx2.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx2.fillStyle = color2[i];
-        ctx2.fill();
-        ctx2.stroke();
-
-        i2 = (i2 + 1) % color2.length;
-    }
-    setInterval(change2, 1000);
-
-    var c3 = document.getElementById("canvas3");
-    var ctx3 = c3.getContext("2d");
-    var i3 = 0;
-    function change3() {
-        var color3 = ["green", "blue"];
-
-        ctx3.beginPath();
-        ctx3.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx3.fillStyle = color3[i];
-        ctx3.fill();
-        ctx3.stroke();
-
-        i3 = (i3 + 1) % color.length;
-    }
-    setInterval(change3, 1000);
-
-    </script>
     
 </body>
 </html>
