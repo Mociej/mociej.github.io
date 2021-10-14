@@ -29,16 +29,20 @@
         }
     }
     function moveBall() {
-        if(i==5){
-            ctx.beginPath();
-            ctx.arc(xBall, yBall, 25, 0, 2 * Math.PI);
-            ctx.stroke();
-            i++;
+        if(i>=5){
+            if(xBall<400 || yball<400){
+                ctx.beginPath();
+                ctx.arc(xBall, yBall, 25, 0, 2 * Math.PI);
+                ctx.stroke();
+                xBall+=1;
+                yBall+=1;
+                i++;
+            }
         }
     }
 
     setInterval(drawStairs, 1000);
-    setInterval(moveBall, 1000);
+    setInterval(moveBall, 10);
     </script>
 </body>
 </html>
