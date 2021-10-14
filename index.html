@@ -15,6 +15,7 @@
     var i = 0;
     var width = 100;
     var height = 100;
+
     function drawStairs() {
         if(i<5){
             ctx.beginPath();
@@ -25,8 +26,17 @@
             i++;
         }
     }
-    setInterval(drawStairs, 1000);
+    function moveBall() {
+        if(i==5){
+            ctx.beginPath();
+            ctx.arc(50, 50, 25, 0, 2 * Math.PI);
+            ctx.stroke();
+            i++;
+        }
+    }
 
+    setInterval(drawStairs, 1000);
+    setInterval(moveBall, 1000);
     </script>
 </body>
 </html>
