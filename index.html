@@ -13,23 +13,25 @@
     var ctx = c.getContext("2d");
 
     var i = 0;
-    var width = 100;
-    var height = 100;
+    var x = 100;
+    var y = 100;
+    var xBall = 125;
+    var yBall = 50;
 
     function drawStairs() {
         if(i<5){
             ctx.beginPath();
-            ctx.rect(width, height, 50, 50);
+            ctx.rect(x, y, 50, 50);
             ctx.stroke();
-            width+=50;
-            height+=50;
+            x+=50;
+            y+=50;
             i++;
         }
     }
     function moveBall() {
         if(i==5){
             ctx.beginPath();
-            ctx.arc(50, 50, 25, 0, 2 * Math.PI);
+            ctx.arc(xBall, yBall, 25, 0, 2 * Math.PI);
             ctx.stroke();
             i++;
         }
