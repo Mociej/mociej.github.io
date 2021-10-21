@@ -13,7 +13,8 @@ canvas {
 
 var shipRectangle;
 var shipBUllet;
-
+var bulletX;
+var bulletY;
 function startGame() {
     myGameArea.start();
     shipRectangle = new component(100, 50, "blue", 350, 520);
@@ -57,6 +58,18 @@ function component(width, height, color, x, y) {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
         // ctx.fillRect(0, 0, 350, 520);
+        if(myGameArea.shooted==1){
+            if(bulletY>1){
+                console.log("Shooted!");
+                ctx= myGameArea.context;
+                ctx.arc(bulletX, bulletY, 10, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                bulletY-=1;
+            }else{
+                myGameArea.shooted = 1;
+            }
+        }
     }
     this.newPos = function() {
         this.x += this.speedX;
@@ -73,11 +86,12 @@ function updateGameArea() {
 
     if (myGameArea.keys && myGameArea.keys[37]) {shipRectangle.speedX = -5; }
     if (myGameArea.keys && myGameArea.keys[39]) {shipRectangle.speedX = 5; }
-    if (myGameArea.keys && myGameArea.keys[38]) {shipRectangle.speedY = -5; }
-    if (myGameArea.keys && myGameArea.keys[40]) {shipRectangle.speedY = 5; }
+
 
     if (myGameArea.keys && myGameArea.keys[32]) {
         if(myGameArea.shooted == 0){
+            bulletX=shipRectangle.x;
+            bulletY=shipRectangle.y;
             myGameArea.shooted = 1;
             console.log("Shoot!");
         }
