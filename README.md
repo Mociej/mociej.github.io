@@ -1,5 +1,5 @@
 # mociej.github.io
 
-PMOB zadanie 2 animacja schodków i kulki
+PMOB zadanie 3 gra
 
 Strona dostępna pod adresem https://mociej.github.io/
