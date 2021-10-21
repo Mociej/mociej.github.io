@@ -27,6 +27,7 @@ var myGameArea = {
         this.canvas.width = 800;
         this.canvas.height = 600;
         this.context = this.canvas.getContext("2d");
+        this.context2 = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
@@ -41,7 +42,7 @@ var myGameArea = {
         this.context.clearRect(0, 500, this.canvas.width, this.canvas.height);
     },
     clearBullet : function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height-200);
+        this.context2.clearRect(0, 0, this.canvas.width, this.canvas.height-200);
     }
 }
 
@@ -57,17 +58,17 @@ function component(width, height, color, x, y) {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.fillRect(0, 0, 350, 520);
         if(myGameArea.shooted==1){
             if(bulletY>1){
                 console.log("Shooted!");
-                ctx= myGameArea.context;
-                ctx.arc(bulletX, bulletY, 10, 0, 2 * Math.PI);
-                ctx.stroke();
-
-                bulletY-=1;
+                ctx2= myGameArea.context2;
+                ctx2.clearRect(0, 0, 800, 400);
+                ctx2.arc(bulletX, bulletY+20, 10, 0, 2 * Math.PI);
+                ctx2.stroke();
+                
+                bulletY-=5;
             }else{
-                myGameArea.shooted = 1;
+                myGameArea.shooted = 0;
             }
         }
     }
