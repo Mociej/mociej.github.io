@@ -28,6 +28,7 @@ var myGameArea = {
         this.canvas.height = 600;
         this.context = this.canvas.getContext("2d");
         this.context2 = this.canvas.getContext("2d");
+        this.context3 = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
@@ -39,10 +40,13 @@ var myGameArea = {
         })
     }, 
     clear : function(){
-        this.context.clearRect(0, 500, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     clearBullet : function(){
         this.context2.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    clearObject : function(){
+        this.context3.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
@@ -63,10 +67,10 @@ function component(width, height, color, x, y) {
                 console.log("Shooted!");
                 ctx = myGameArea.context2;
                 ctx.beginPath();
-                ctx.arc(bulletX, bulletY+20, 10, 0, 2 * Math.PI);
+                ctx.arc(bulletX+50, bulletY+20, 10, 0, 2 * Math.PI);
                 ctx.stroke();
                 
-                bulletY-=5;
+                bulletY-=7;
             }else{
                 myGameArea.shooted = 0;
             }
@@ -80,6 +84,7 @@ function component(width, height, color, x, y) {
 
 
 function updateGameArea() {
+    myGameArea.clearObject();
     myGameArea.clearBullet();
     myGameArea.clear();
 
