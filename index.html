@@ -4,7 +4,7 @@
 
 <h1>PMOB</h1>
 
-<p>Animacja 1</p>
+<p>Animacja 2</p>
 
 <canvas id="canvas1" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
     
@@ -12,43 +12,6 @@
     var c = document.getElementById("canvas1");
     var ctx = c.getContext("2d");
 
-    var i = 0;
-    var x = 100;
-    var y = 100;
-    var xBall = 125;
-    var yBall = 40;
-
-    function drawStairs() {
-        if(i<5){
-            ctx.beginPath();
-            ctx.rect(x, y, 50, 50);
-            ctx.stroke();
-            x+=50;
-            y+=50;
-            i++;
-        }
-    }
-    function moveBall() {
-        if(i>=5){
-            if(xBall<400 || yball<400){
-                ctx.beginPath();
-                ctx.arc(xBall, yBall, 25, 0, 2 * Math.PI);
-                ctx.clearRect(0, 0, c.width, c.height);
-                ctx.rect(100, 100, 50, 50);
-                ctx.rect(150, 150, 50, 50);
-                ctx.rect(200, 200, 50, 50);
-                ctx.rect(250, 250, 50, 50);
-                ctx.rect(300, 300, 50, 50);
-                ctx.stroke();
-                xBall+=1;
-                yBall+=1;
-                i++;
-            }
-        }
-    }
-
-    setInterval(drawStairs, 1000);
-    setInterval(moveBall, 10);
     </script>
 </body>
 </html>
