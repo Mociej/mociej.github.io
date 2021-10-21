@@ -37,7 +37,10 @@ var myGameArea = {
         })
     }, 
     clear : function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 500, this.canvas.width, this.canvas.height);
+    },
+    clearBullet : function(){
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height-200);
     }
 }
 
@@ -53,6 +56,7 @@ function component(width, height, color, x, y) {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
+        // ctx.fillRect(0, 0, 350, 520);
     }
     this.newPos = function() {
         this.x += this.speedX;
@@ -62,8 +66,8 @@ function component(width, height, color, x, y) {
 
 
 function updateGameArea() {
-
     myGameArea.clear();
+    myGameArea.clearBullet();
     shipRectangle.speedX = 0;
     shipRectangle.speedY = 0;
 
