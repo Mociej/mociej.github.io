@@ -75,6 +75,10 @@ function component(width, height, color, x, y) {
                 myGameArea.shooted = 0;
             }
         }
+        ctx = myGameArea.context3;
+        ctx.beginPath();
+        ctx.arc(200,50, 25, 0, 2 * Math.PI);
+        ctx.stroke();
     }
     this.newPos = function() {
         this.x += this.speedX;
@@ -84,6 +88,7 @@ function component(width, height, color, x, y) {
 
 
 function updateGameArea() {
+    myGameArea.clearObject();
     myGameArea.clearObject();
     myGameArea.clearBullet();
     myGameArea.clear();
