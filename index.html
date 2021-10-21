@@ -42,7 +42,7 @@ var myGameArea = {
         this.context.clearRect(0, 500, this.canvas.width, this.canvas.height);
     },
     clearBullet : function(){
-        this.context2.clearRect(0, 0, this.canvas.width, this.canvas.height-200);
+        this.context2.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
@@ -61,10 +61,10 @@ function component(width, height, color, x, y) {
         if(myGameArea.shooted==1){
             if(bulletY>1){
                 console.log("Shooted!");
-                ctx2= myGameArea.context2;
-                ctx2.clearRect(0, 0, 800, 400);
-                ctx2.arc(bulletX, bulletY+20, 10, 0, 2 * Math.PI);
-                ctx2.stroke();
+                ctx = myGameArea.context2;
+                ctx.beginPath();
+                ctx.arc(bulletX, bulletY+20, 10, 0, 2 * Math.PI);
+                ctx.stroke();
                 
                 bulletY-=5;
             }else{
@@ -80,8 +80,9 @@ function component(width, height, color, x, y) {
 
 
 function updateGameArea() {
-    myGameArea.clear();
     myGameArea.clearBullet();
+    myGameArea.clear();
+
     shipRectangle.speedX = 0;
     shipRectangle.speedY = 0;
 
