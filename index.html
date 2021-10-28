@@ -4,12 +4,138 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    background-color: #a0d5f8;
+    background-color: grey;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <script></script>
-    <canvas id="canvas" width=600 height=800></canvas>
+    <script>
+        $(function(){
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");     
+            var leftDown = false;
+            var rightDown = false;
+            var offset = $("#canvas").offset();
+            var oX = offset.left;
+            var oY = offset.top;
+            var width = 800;
+            var height = 600;
+            var carX = oX + 150;
+            var carY = canvas.height - 150;
+            var widthCar = 100;
+            var widthWheel = 10
+            var widthLine = 15;
+            var heightLine = 80;
+            var line = 0
+            var move = 4
+            var action = 15;
+
+            function Wheel(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.arc(x, y, widthWheel, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            function Wheels() {
+                Wheel(carX, carY + 20)
+                Wheel(carX, carY + 80)
+                Wheel(carX + widthCar, carY + 20)
+                Wheel(carX + widthCar, carY + 80)
+            }
+
+            function Road(){
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = "grey";
+                ctx.rect(oX, oY, width, height);
+                ctx.fill();
+            }
+
+            function carAction(m) {
+                carX += m       
+                Wheels()
+                ctx.beginPath();
+                ctx.fillStyle = "silver";
+                ctx.rect(carX, carY, widthCar, widthCar);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            function Sides(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.rect(x, y, widthLine, heightLine / 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.rect(x, y + heightLine / 2, widthLine, heightLine / 2);
+                ctx.fill();
+                ctx.stroke();
+            }
+            function Center(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.rect(x, y, widthLine, heightLine);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            function LinesDisplay() {
+                for (i = line; i < oY + height; i += 150) {
+                    Sides(oX + 5, i);
+                    Center(oX + (width / 2) - 5, i);
+                    Sides(oX + width - 25, i);
+                }
+            }
+
+            function start() {
+                if (line > 150) {
+                    line = 0
+                    move += 0.1
+                }
+                line += move
+
+                Road();
+                LinesDisplay();
+
+                carAction(0);
+
+                if (leftDown) {
+                    if (carX > oX)
+                        carAction(-action);                     
+                } else if (rightDown) {
+                    if (carX < (canvas.width - widthCar))
+                        carAction(action);                   
+                }
+                requestAnimationFrame(start);
+            }
+
+            document.onkeydown = keyDown;
+            document.onkeyup = keyUp;
+
+            function keyDown(e) {
+                e = e || window.event;
+
+                if (e.keyCode == '37') 
+                        leftDown = true            
+                else if (e.keyCode == '39') 
+                    rightDown = true                              
+            }
+
+            function keyUp(e) {
+                if (e.keyCode == '37')
+                    leftDown = false;           
+                else if (e.keyCode == '39') 
+                    rightDown = false;            
+            }
+
+            start();
+        });
+
+    </script>
+    <canvas id="canvas" width=800 height=600></canvas>
 </body>
 </html>
