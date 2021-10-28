@@ -118,12 +118,26 @@ canvas {
                 }
             }
 
+            function objectHit() {
+                if (carX - widthWheel < objX + widthObject && 
+                    carX + widthCar + widthWheel > objX && 
+                    carY <= objY + widthObject - move && 
+                    carY + widthCar >= objY) {
+                    return true
+                }
+
+                return false
+            }
             function start() {
                 if (line > 150) {
                     line = 0
                     move += 0.1
                 }
                 line += move
+
+                if (objectHit()) {
+                    return
+                }
 
                 Road();
                 LinesDisplay();
