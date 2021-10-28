@@ -29,7 +29,11 @@ canvas {
             var heightLine = 80;
             var line = 0
             var move = 4
+            var target = 0
             var action = 15;
+            var objX = 0
+            var objY = 0
+            var widthObject = 100
 
             function Wheel(x, y) {
                 ctx.beginPath();
@@ -75,6 +79,7 @@ canvas {
                 ctx.fill();
                 ctx.stroke();
             }
+            
             function Center(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "white";
@@ -83,6 +88,28 @@ canvas {
                 ctx.stroke();
             }
 
+            function Obj() {
+                objX = Math.floor(Math.random() * 500) + oX;  
+                objY = 0;
+                target = 1;
+            }
+
+            function ObjDisplay() {
+                if (target == 0) {
+                    Obj()
+                }
+
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.rect(objX, objY, widthObject, widthObject);
+                ctx.fill();
+                ctx.stroke();
+
+                objY += move - 0.1
+                if (objY >= oY + height) {
+                    target = 0
+                }
+            }
             function LinesDisplay() {
                 for (i = line; i < oY + height; i += 150) {
                     Sides(oX + 5, i);
@@ -100,7 +127,7 @@ canvas {
 
                 Road();
                 LinesDisplay();
-
+                ObjDisplay();
                 carAction(0);
 
                 if (leftDown) {
