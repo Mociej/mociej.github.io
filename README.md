@@ -1,5 +1,5 @@
 # mociej.github.io
 
-PMOB zadanie 3 gra
+PMOB zadanie 4 wyścig
 
 Strona dostępna pod adresem https://mociej.github.io/
