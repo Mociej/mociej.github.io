@@ -178,6 +178,13 @@ canvas {
                 }
                 return false
             }
+            function shootedObj(x, y) {
+                if (x - bulletWidth < objX + widthObject && x + bulletWidth > objX && y <= objY + widthObject) {
+                    target = 0;
+                    return true
+                }
+                return false
+            }
 
             function Fire(x,y) {
                 ctx.beginPath();
@@ -187,9 +194,12 @@ canvas {
                 ctx.fill()
                 ctx.closePath();
 
-                if (y > oY) {        
+                if (y > oY) {      
                     setTimeout(function() {
                         requestAnimationFrame(function() {
+                            if (shootedObj(x, y)) {
+                                return 
+                            }
                             Fire(x, y);
                         }
                     )}, 1);
@@ -202,22 +212,20 @@ canvas {
                 }
                 line += move
 
-                if (objectHit()) {
-                    return
-                }
-
                 Road();
                 LinesDisplay();
                 ObjDisplay();
-                BonusDisplay();
-                
+                BonusDisplay();        
+                carAction(0);
+                ScoreTable();
+
+                if (objectHit()) {
+                    return
+                }
                 if (BonusHit()) {
                     initializeBonus()
                     points++;
                 }
-                
-                carAction(0);
-                ScoreTable();
 
                 if (leftDown) {
                     if (carX > oX)
