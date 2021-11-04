@@ -16,6 +16,8 @@ canvas {
             var ctx = canvas.getContext("2d");     
             var leftDown = false;
             var rightDown = false;
+            var upDown = false;
+            var downDown = false;
             var offset = $("#canvas").offset();
             var oX = offset.left;
             var oY = offset.top;
@@ -215,16 +217,30 @@ canvas {
                 e = e || window.event;
 
                 if (e.keyCode == '37') 
-                        leftDown = true            
+                    leftDown = true            
                 else if (e.keyCode == '39') 
-                    rightDown = true                              
+                    rightDown = true   
+                else if (e.keyCode == '38') { 
+                    upDown = true
+                    move += 0.5   
+                }
+                else if (e.keyCode == '40') { 
+                    downDown = true
+                    move -= 0.5           
+                }                     
             }
 
             function keyUp(e) {
                 if (e.keyCode == '37')
                     leftDown = false;           
                 else if (e.keyCode == '39') 
-                    rightDown = false;            
+                    rightDown = false;
+                else if (e.keyCode == '38') { 
+                    upDown = false;   
+                }
+                else if (e.keyCode == '40') {
+                    downDown = false;   
+                }
             }
 
             start();
