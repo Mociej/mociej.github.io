@@ -42,6 +42,8 @@ canvas {
             var bonusX = 0
             var bonusY = 0
             var bonusHit = 0
+            var bulletWidth = 10
+
             function Wheel(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "black";
@@ -177,6 +179,23 @@ canvas {
                 return false
             }
 
+            function Fire(x,y) {
+                ctx.beginPath();
+                ctx.fillStyle = "yellow";
+                y -= action
+                ctx.arc(x, y, bulletWidth , 0, 2 * Math.PI);
+                ctx.fill()
+                ctx.closePath();
+
+                if (y > oY) {        
+                    setTimeout(function() {
+                        requestAnimationFrame(function() {
+                            Fire(x, y);
+                        }
+                    )}, 1);
+                }
+            }
+
             function start() {
                 if (line > 150) {
                     line = 0
@@ -227,7 +246,10 @@ canvas {
                 else if (e.keyCode == '40') { 
                     downDown = true
                     move -= 0.5           
-                }                     
+                }
+                else if (e.keyCode == '32') { 
+                    Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
+                }                         
             }
 
             function keyUp(e) {
