@@ -37,6 +37,8 @@ canvas {
 
             var points = 0
 
+            var widthBonus = 30
+            
             function Wheel(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "black";
@@ -138,6 +140,14 @@ canvas {
                 ctx.fillText("Points: " + points , 10, 30);
                 ctx.stroke();
             }
+            function BonusDisplay() {
+                ctx.beginPath();
+                ctx.fillStyle = "blue";
+                ctx.rect(100, 100, widthBonus, widthBonus);
+                ctx.fill();
+                ctx.stroke();
+            }
+
             function start() {
                 if (line > 150) {
                     line = 0
@@ -151,6 +161,7 @@ canvas {
                 Road();
                 LinesDisplay();
                 ObjDisplay();
+                BonusDisplay();
                 carAction(0);
                 ScoreTable();
 
@@ -185,7 +196,7 @@ canvas {
 
             start();
         });
-        
+
     </script>
     <canvas id="canvas" width=800 height=600></canvas>
 </body>
