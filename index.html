@@ -11,7 +11,7 @@ canvas {
 </head>
 <body>
     <script>
-              $(function(){
+        $(function(){
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext("2d");     
             var leftDown = false;
@@ -34,6 +34,8 @@ canvas {
             var objX = 0
             var objY = 0
             var widthObject = 100
+
+            var points = 0
 
             function Wheel(x, y) {
                 ctx.beginPath();
@@ -128,6 +130,14 @@ canvas {
 
                 return false
             }
+
+            function ScoreTable() {
+                ctx.beginPath();            
+                ctx.fillStyle = "white" 
+                ctx.font = "20px Times New Roman";             
+                ctx.fillText("Points: " + points , 10, 30);
+                ctx.stroke();
+            }
             function start() {
                 if (line > 150) {
                     line = 0
@@ -142,6 +152,7 @@ canvas {
                 LinesDisplay();
                 ObjDisplay();
                 carAction(0);
+                ScoreTable();
 
                 if (leftDown) {
                     if (carX > oX)
@@ -174,6 +185,7 @@ canvas {
 
             start();
         });
+        
     </script>
     <canvas id="canvas" width=800 height=600></canvas>
 </body>
