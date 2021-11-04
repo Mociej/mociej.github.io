@@ -33,12 +33,13 @@ canvas {
             var action = 15;
             var objX = 0
             var objY = 0
-            var widthObject = 100
+            var widthObject = 150
 
             var points = 0
-
             var widthBonus = 30
-            
+            var bonusX = 0
+            var bonusY = 0
+            var bonusHit = 0
             function Wheel(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "black";
@@ -141,11 +142,27 @@ canvas {
                 ctx.stroke();
             }
             function BonusDisplay() {
+                if (bonusHit == 0) {
+                    initializeBonus();
+                }
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
-                ctx.rect(100, 100, widthBonus, widthBonus);
+                ctx.rect(bonusX, bonusY, widthBonus, widthBonus);
                 ctx.fill();
                 ctx.stroke();
+                bonusY += move - 0.1
+                if (bonusY >= oY + height) {
+                    bonusHit = 0
+                }
+            }
+
+            function initializeBonus() {
+                do {
+                    bonusX = Math.floor(Math.random() * 500) + oX;
+                } while (bonusX <= objX + widthObject && bonusX + widthBonus >= objX) 
+                
+                bonusY = 0;
+                bonusHit = 1
             }
 
             function start() {
