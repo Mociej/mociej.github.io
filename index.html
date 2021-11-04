@@ -94,7 +94,7 @@ canvas {
             }
 
             function Obj() {
-                objX = Math.floor(Math.random() * 500) + oX;  
+                objX = Math.floor(Math.random() * 700) + oX;  
                 objY = 0;
                 target = 1;
             }
@@ -158,11 +158,21 @@ canvas {
 
             function initializeBonus() {
                 do {
-                    bonusX = Math.floor(Math.random() * 500) + oX;
+                    bonusX = Math.floor(Math.random() * 700) + oX;
                 } while (bonusX <= objX + widthObject && bonusX + widthBonus >= objX) 
                 
                 bonusY = 0;
                 bonusHit = 1
+            }
+
+            function BonusHit() {
+                if (carX - widthWheel < bonusX + widthBonus && 
+                    carX + widthCar + widthWheel > bonusX && 
+                    carY <= bonusY + widthBonus - move && 
+                    carY + widthCar >= bonusY) {
+                    return true
+                }
+                return false
             }
 
             function start() {
@@ -179,6 +189,12 @@ canvas {
                 LinesDisplay();
                 ObjDisplay();
                 BonusDisplay();
+                
+                if (BonusHit()) {
+                    initializeBonus()
+                    points++;
+                }
+                
                 carAction(0);
                 ScoreTable();
 
