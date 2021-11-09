@@ -32,6 +32,7 @@ canvas {
             var move = 4
             var target = 0
             var action = 15;
+            var speeding = 2;
             var objX = 0
             var objY = 0
             var widthObject = 150
@@ -66,8 +67,9 @@ canvas {
                 ctx.fill();
             }
 
-            function carAction(m) {
-                carX += m       
+            function carAction(m,sp) {
+                carX += m
+                carY += sp       
                 Wheels()
                 ctx.beginPath();
                 ctx.fillStyle = "silver";
@@ -218,7 +220,7 @@ canvas {
                 LinesDisplay();
                 ObjDisplay();
                 BonusDisplay();        
-                carAction(0);
+                carAction(0,0);
                 ScoreTable();
 
                 if (objectHit()) {
@@ -231,10 +233,14 @@ canvas {
 
                 if (leftDown) {
                     if (carX > oX)
-                        carAction(-action);                     
+                        carAction(-action,0);                     
                 } else if (rightDown) {
                     if (carX < (canvas.width - widthCar))
-                        carAction(action);                   
+                        carAction(action,0);                   
+                } else if (upDown) {                
+                        carAction(0,-speeding);                   
+                } else if (downDown) {                
+                        carAction(0,speeding);                   
                 }
                 requestAnimationFrame(start);
             }
@@ -252,12 +258,10 @@ canvas {
                 else if (e.keyCode == '38') { 
                     upDown = true
                     move += 0.5   
-                    carY -= 10
                 }
                 else if (e.keyCode == '40') { 
                     downDown = true
-                    move -= 0.5
-                    carY += 10           
+                    move -= 0.5        
                 }
                 else if (e.keyCode == '32') { 
                     Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
