@@ -234,20 +234,15 @@ canvas {
 
                     if (rotate < 20) {   
                         rotate += 0.1; 
-                        ctx.translate(0, 400);
+                        ctx.translate(400, 400);
                         ctx.rotate(leftOrRight * 0.1 * Math.PI / 180);
-                        ctx.translate(0, -400);                   
+                        ctx.translate(-400, -400);                   
                     } else {
                         counter = 0;
                         rotate = 0;
                         leftOrRight = 0;
                     }
                 } else {
-
-                    if (leftOrRight == 1)
-                        leftOrRight = -1
-                    else 
-                        leftOrRight = 1
                     counter += 0.1;
                 }
             }
