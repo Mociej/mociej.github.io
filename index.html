@@ -12,7 +12,9 @@ canvas {
     <script>
         $(function(){
             var canvas = document.getElementById("canvas");
-            var ctx = canvas.getContext("2d");     
+            var canvas2 = document.getElementById("canvas2");
+            var ctx = canvas.getContext("2d");
+            var ctxBoard = canvas2.getContext("2d");         
             var leftDown = false;
             var rightDown = false;
             var upDown = false;
@@ -21,7 +23,7 @@ canvas {
             var oX = offset.left;
             var oY = offset.top;
             var width = 800;
-            var height = 600;
+            var height = 2000;
             var carX = oX + 150;
             var carY = canvas.height - 150;
             var widthCar = 100;
@@ -44,6 +46,10 @@ canvas {
             var bonusY = 0
             var bonusHit = 0
             var bulletWidth = 10
+            var rotate = 1;
+            var counter = 0;
+            var leftOrRight = 0;
+            var changeturn = 0
 
             function Wheel(x, y) {
                 ctx.beginPath();
@@ -141,12 +147,13 @@ canvas {
             }
 
             function ScoreTable() {
-                ctx.beginPath();            
-                ctx.fillStyle = "white" 
-                ctx.font = "20px Times New Roman";             
-                ctx.fillText("Points: " + points , 10, 30);
-                ctx.fillText("Destroyed: " + objdestroyed , 10, 60);
-                ctx.stroke();
+                ctxBoard.clearRect(0, 0, canvas2.width, canvas2.height);
+                ctxBoard.beginPath();            
+                ctxBoard.fillStyle = "white" 
+                ctxBoard.font = "20px Times New Roman";             
+                ctxBoard.fillText("Points: " + points , 10, 30);
+                ctxBoard.fillText("Destroyed: " + objdestroyed , 10, 60);
+                ctxBoard.stroke();
             }
             function BonusDisplay() {
                 if (bonusHit == 0) {
@@ -210,18 +217,45 @@ canvas {
                 }
             }
 
+            function rotation() {
+                if (counter >= 20) {
+                    if (leftOrRight == 0) {
+                        if (Math.random() > 0)
+                            leftOrRight = -1
+                        else 
+                            leftOrRight = 1;                  
+                    }
+
+                    if (rotate < 20) {   
+                        rotate += 0.1; 
+                        ctx.translate(1000, 400);
+                        ctx.rotate(leftOrRight * 0.1 * Math.PI / 180);
+                        ctx.translate(-1000, -400);                   
+                    } else {
+                        counter = 0;
+                        rotate = 0;
+                        leftOrRight = 0;
+                    }
+                } else {
+                    counter += 0.1;
+                }
+            }
+
             function start() {
                 if (line > 150) {
                     line = 0
                 }
                 line += move
-
+                
+                
+                ScoreTable();
+                rotation();
                 Road();
                 LinesDisplay();
                 ObjDisplay();
                 BonusDisplay();        
                 carAction(0,0);
-                ScoreTable();
+                
 
                 if (objectHit()) {
                     return
@@ -288,5 +322,6 @@ canvas {
 
     </script>
     <canvas id="canvas" width=800 height=600></canvas>
+    <canvas id="canvas2" width=800 height=100></canvas>
 </body>
 </html>
