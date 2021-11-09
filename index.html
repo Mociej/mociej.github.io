@@ -19,8 +19,8 @@ canvas {
             var rightDown = false;
             var upDown = false;
             var downDown = false;
-            var wDown = false;
-            var sDown = false;
+            var aDown = false;
+            var zDown = false;
             var offset = $("#canvas").offset();
             var oX = offset.left;
             var oY = offset.top;
@@ -155,10 +155,10 @@ canvas {
                 ctxBoard.font = "20px Times New Roman";             
                 ctxBoard.fillText("Points: " + points , 10, 30);
                 ctxBoard.fillText("Destroyed: " + objdestroyed , 10, 60);
-                ctxBoard.fillText("w - do przodu, s - do tyłu" , 10, 90);
+                ctxBoard.fillText("a - do przodu, z - do tyłu" , 10, 90);
                 ctxBoard.fillText("< - w lewo, > - w prawo" , 10, 110);
                 ctxBoard.fillText("Strzałki góra/dół są do przyśpieszania." , 10, 130);
-
+                ctxBoard.fillText("Speed: " + move , 10, 150);
                 ctxBoard.stroke();
             }
             function BonusDisplay() {
@@ -279,10 +279,10 @@ canvas {
                 } else if (rightDown) {
                     if (carX < (canvas.width - widthCar))
                         carAction(action,0);                   
-                } else if (wDown) {       
+                } else if (aDown) {       
                     if (carY > oY)         
                         carAction(0,-speeding);                   
-                } else if (sDown) {   
+                } else if (zDown) {   
                     if (carY < (canvas.height - widthCar))             
                         carAction(0,speeding);                   
                 }
@@ -308,11 +308,11 @@ canvas {
                     if(move > 0)
                         move -= 0.5        
                 }
-                else if (e.keyCode == '87') { 
-                    wDown = true;  
+                else if (e.keyCode == '65') { 
+                    aDown = true;  
                 }  
-                else if (e.keyCode == '83') { 
-                    sDown = true;     
+                else if (e.keyCode == '90') { 
+                    zDown = true;     
                 }  
                 else if (e.keyCode == '32') { 
                     Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
@@ -325,20 +325,20 @@ canvas {
                 else if (e.keyCode == '39') 
                     rightDown = false;
                 else if (e.keyCode == '38')
-                    upDown = false;                  
+                    upDown = false;                                    
                 else if (e.keyCode == '40') 
                     downDown = false;  
-                else if (e.keyCode == '87')
-                    wDown = false;                  
-                else if (e.keyCode == '83') 
-                    sDown = false;   
+                else if (e.keyCode == '65')
+                    aDown = false;                  
+                else if (e.keyCode == '90') 
+                    zDown = false;   
             }
 
             start();
         });
 
     </script>
-    <canvas id="canvas2" width=800 height=150></canvas><br> 
+    <canvas id="canvas2" width=800 height=200></canvas><br> 
     <canvas id="canvas" width=800 height=600></canvas>
 </body>
 </html>
