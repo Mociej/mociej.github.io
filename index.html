@@ -237,9 +237,11 @@ canvas {
                 } else if (rightDown) {
                     if (carX < (canvas.width - widthCar))
                         carAction(action,0);                   
-                } else if (upDown) {                
+                } else if (upDown) {       
+                    if (carY > oY)         
                         carAction(0,-speeding);                   
-                } else if (downDown) {                
+                } else if (downDown) {   
+                    if (carY < (canvas.height - widthCar))             
                         carAction(0,speeding);                   
                 }
                 requestAnimationFrame(start);
