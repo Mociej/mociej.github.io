@@ -37,6 +37,7 @@ canvas {
             var widthObject = 150
 
             var points = 0
+            var objdestroyed = 0
             var widthBonus = 30
             var bonusX = 0
             var bonusY = 0
@@ -142,6 +143,7 @@ canvas {
                 ctx.fillStyle = "white" 
                 ctx.font = "20px Times New Roman";             
                 ctx.fillText("Points: " + points , 10, 30);
+                ctx.fillText("Destroyed: " + objdestroyed , 10, 60);
                 ctx.stroke();
             }
             function BonusDisplay() {
@@ -180,6 +182,7 @@ canvas {
             function shootedObj(x, y) {
                 if (x - bulletWidth < objX + widthObject && x + bulletWidth > objX && y <= objY + widthObject) {
                     target = 0;
+                    objdestroyed++;
                     return true
                 }
                 return false
