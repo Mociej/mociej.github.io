@@ -1,73 +1,281 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+canvas {
+    background-color: grey;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 <body>
-
-<h1>PMOB</h1>
-
-<p>Canvas 1</p>
-
-<canvas id="canvas1" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
-<canvas id="canvas2" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>
-<canvas id="canvas3" width="800" height="600" style="border:1px solid #d3d3d3;">.</canvas>  
     <script>
-    var c = document.getElementById("canvas1");
-    var ctx = c.getContext("2d");
-    var i = 0;
-    function change() {
-        var color = ["green", "blue"];
+        $(function(){
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");     
+            var leftDown = false;
+            var rightDown = false;
+            var upDown = false;
+            var downDown = false;
+            var offset = $("#canvas").offset();
+            var oX = offset.left;
+            var oY = offset.top;
+            var width = 800;
+            var height = 600;
+            var carX = oX + 150;
+            var carY = canvas.height - 150;
+            var widthCar = 100;
+            var widthWheel = 10
+            var widthLine = 15;
+            var heightLine = 80;
+            var line = 0
+            var move = 4
+            var target = 0
+            var action = 15;
+            var objX = 0
+            var objY = 0
+            var widthObject = 150
 
-        ctx.beginPath();
-        ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx.fillStyle = color[i];
-        ctx.fill();
-        ctx.stroke();
+            var points = 0
+            var widthBonus = 30
+            var bonusX = 0
+            var bonusY = 0
+            var bonusHit = 0
+            var bulletWidth = 10
 
-        i = (i + 1) % color.length;
-    }
-    setInterval(change, 1000);
+            function Wheel(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.arc(x, y, widthWheel, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
 
-    var c2 = document.getElementById("canvas2");
-    var ctx2 = c2.getContext("2d");
+            function Wheels() {
+                Wheel(carX, carY + 20)
+                Wheel(carX, carY + 80)
+                Wheel(carX + widthCar, carY + 20)
+                Wheel(carX + widthCar, carY + 80)
+            }
 
-    var grd = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
-    grd.addColorStop(0, "green");
-    grd.addColorStop(1, "blue");
+            function Road(){
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = "grey";
+                ctx.rect(oX, oY, width, height);
+                ctx.fill();
+            }
 
-    var grd2 = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
-    grd2.addColorStop(0, "blue");
-    grd2.addColorStop(1, "green");
+            function carAction(m) {
+                carX += m       
+                Wheels()
+                ctx.beginPath();
+                ctx.fillStyle = "silver";
+                ctx.rect(carX, carY, widthCar, widthCar);
+                ctx.fill();
+                ctx.stroke();
+            }
 
-    var i2 = 0;
-    function change2() {
-        var color2 = [grd, grd2];
+            function Sides(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.rect(x, y, widthLine, heightLine / 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.rect(x, y + heightLine / 2, widthLine, heightLine / 2);
+                ctx.fill();
+                ctx.stroke();
+            }
+            
+            function Center(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.rect(x, y, widthLine, heightLine);
+                ctx.fill();
+                ctx.stroke();
+            }
 
-        ctx2.beginPath();
-        ctx2.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx2.fillStyle = color2[i];
-        ctx2.fill();
-        ctx2.stroke();
+            function Obj() {
+                objX = Math.floor(Math.random() * 700) + oX;  
+                objY = 0;
+                target = 1;
+            }
 
-        i2 = (i2 + 1) % color2.length;
-    }
-    setInterval(change2, 1000);
+            function ObjDisplay() {
+                if (target == 0) {
+                    Obj()
+                }
 
-    var c3 = document.getElementById("canvas3");
-    var ctx3 = c3.getContext("2d");
-    var i3 = 0;
-    function change3() {
-        var color3 = ["green", "blue"];
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+                ctx.rect(objX, objY, widthObject, widthObject);
+                ctx.fill();
+                ctx.stroke();
 
-        ctx3.beginPath();
-        ctx3.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx3.fillStyle = color3[i];
-        ctx3.fill();
-        ctx3.stroke();
+                objY += move
+                if (objY >= oY + height) {
+                    target = 0
+                }
+            }
+            function LinesDisplay() {
+                for (i = line; i < oY + height; i += 150) {
+                    Sides(oX + 5, i);
+                    Center(oX + (width / 2) - 5, i);
+                    Sides(oX + width - 25, i);
+                }
+            }
 
-        i3 = (i3 + 1) % color.length;
-    }
-    setInterval(change3, 1000);
+            function objectHit() {
+                if (carX - widthWheel < objX + widthObject && 
+                    carX + widthCar + widthWheel > objX && 
+                    carY <= objY + widthObject - move && 
+                    carY + widthCar >= objY) {
+                    return true
+                }
+
+                return false
+            }
+
+            function ScoreTable() {
+                ctx.beginPath();            
+                ctx.fillStyle = "white" 
+                ctx.font = "20px Times New Roman";             
+                ctx.fillText("Points: " + points , 10, 30);
+                ctx.stroke();
+            }
+            function BonusDisplay() {
+                if (bonusHit == 0) {
+                    initializeBonus();
+                }
+                ctx.beginPath();
+                ctx.fillStyle = "blue";
+                ctx.rect(bonusX, bonusY, widthBonus, widthBonus);
+                ctx.fill();
+                ctx.stroke();
+                bonusY += move - 0.1
+                if (bonusY >= oY + height) {
+                    bonusHit = 0
+                }
+            }
+
+            function initializeBonus() {
+                do {
+                    bonusX = Math.floor(Math.random() * 700) + oX;
+                } while (bonusX <= objX + widthObject && bonusX + widthBonus >= objX) 
+                
+                bonusY = 0;
+                bonusHit = 1
+            }
+
+            function BonusHit() {
+                if (carX - widthWheel < bonusX + widthBonus && 
+                    carX + widthCar + widthWheel > bonusX && 
+                    carY <= bonusY + widthBonus - move && 
+                    carY + widthCar >= bonusY) {
+                    return true
+                }
+                return false
+            }
+            function shootedObj(x, y) {
+                if (x - bulletWidth < objX + widthObject && x + bulletWidth > objX && y <= objY + widthObject) {
+                    target = 0;
+                    return true
+                }
+                return false
+            }
+
+            function Fire(x,y) {
+                ctx.beginPath();
+                ctx.fillStyle = "yellow";
+                y -= action
+                ctx.arc(x, y, bulletWidth , 0, 2 * Math.PI);
+                ctx.fill()
+                ctx.closePath();
+
+                if (y > oY) {      
+                    setTimeout(function() {
+                        requestAnimationFrame(function() {
+                            if (shootedObj(x, y)) {
+                                return 
+                            }
+                            Fire(x, y);
+                        }
+                    )}, 1);
+                }
+            }
+
+            function start() {
+                if (line > 150) {
+                    line = 0
+                }
+                line += move
+
+                Road();
+                LinesDisplay();
+                ObjDisplay();
+                BonusDisplay();        
+                carAction(0);
+                ScoreTable();
+
+                if (objectHit()) {
+                    return
+                }
+                if (BonusHit()) {
+                    initializeBonus()
+                    points++;
+                }
+
+                if (leftDown) {
+                    if (carX > oX)
+                        carAction(-action);                     
+                } else if (rightDown) {
+                    if (carX < (canvas.width - widthCar))
+                        carAction(action);                   
+                }
+                requestAnimationFrame(start);
+            }
+
+            document.onkeydown = keyDown;
+            document.onkeyup = keyUp;
+
+            function keyDown(e) {
+                e = e || window.event;
+
+                if (e.keyCode == '37') 
+                    leftDown = true            
+                else if (e.keyCode == '39') 
+                    rightDown = true   
+                else if (e.keyCode == '38') { 
+                    upDown = true
+                    move += 0.5   
+                }
+                else if (e.keyCode == '40') { 
+                    downDown = true
+                    move -= 0.5           
+                }
+                else if (e.keyCode == '32') { 
+                    Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
+                }                         
+            }
+
+            function keyUp(e) {
+                if (e.keyCode == '37')
+                    leftDown = false;           
+                else if (e.keyCode == '39') 
+                    rightDown = false;
+                else if (e.keyCode == '38') { 
+                    upDown = false;   
+                }
+                else if (e.keyCode == '40') {
+                    downDown = false;   
+                }
+            }
+
+            start();
+        });
 
     </script>
-    
+    <canvas id="canvas" width=800 height=600></canvas>
 </body>
 </html>
