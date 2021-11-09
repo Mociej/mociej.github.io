@@ -226,10 +226,11 @@ canvas {
             function rotation() {
                 if (counter >= 20) {
                     if (leftOrRight == 0) {
-                        if (Math.random() > 0)
+                        r = Math.floor(Math.random() * 10)
+                        if (r > 4)
                             leftOrRight = -1
                         else 
-                            leftOrRight = 1;                  
+                            leftOrRight = 1;           
                     }
 
                     if (rotate < 20) {   
@@ -243,6 +244,7 @@ canvas {
                         leftOrRight = 0;
                     }
                 } else {
+
                     counter += 0.1;
                 }
             }
