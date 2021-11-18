@@ -20,10 +20,10 @@ canvas {
             var oY = offset.top;
             var width = 800;
             var height = 600;
-            var carX = oX + 150;
-            var carY = canvas.height - 150;
+            var carX = oX + 650;
+            var carY = canvas.height - 140;
             var widthCar = 100;
-            var widthWheel = 10
+            var widthWheel = 15
             var widthLine = 15;
             var heightLine = 80;
             var line = 0
@@ -33,6 +33,16 @@ canvas {
             var objX = 0
             var objY = 0
             var widthObject = 100
+            var carWindowWidth = 75
+            var carWindowHeight = 25
+
+            function CarWindow(x, y) {
+                ctx.beginPath();
+                ctx.fillStyle = "blue";
+                ctx.rect(x, y, carWindowWidth, carWindowHeight);
+                ctx.fill();
+                ctx.stroke();
+            }
 
             function Wheel(x, y) {
                 ctx.beginPath();
@@ -43,27 +53,27 @@ canvas {
             }
 
             function Wheels() {
-                Wheel(carX, carY + 20)
-                Wheel(carX, carY + 80)
-                Wheel(carX + widthCar, carY + 20)
-                Wheel(carX + widthCar, carY + 80)
+                Wheel(carX + 20, carY + 100)
+                Wheel(carX + widthCar - 20, carY + 100)
             }
 
             function Road(){
                 ctx.clearRect(0, 0, width, height);
-                ctx.fillStyle = "black";
+                ctx.fillStyle = "grey";
                 ctx.rect(oX, oY, width, height);
                 ctx.fill();
             }
 
             function carAction(m) {
                 carX += m       
-                Wheels()
+                
                 ctx.beginPath();
-                ctx.fillStyle = "silver";
+                ctx.fillStyle = "yellow";
                 ctx.rect(carX, carY, widthCar, widthCar);
                 ctx.fill();
                 ctx.stroke();
+                Wheels();
+                CarWindow(carX, carY+10);
             }
 
             function Sides(x, y) {
