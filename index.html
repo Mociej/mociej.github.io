@@ -10,22 +10,16 @@ canvas {
 </head>
 <body>
     <script>
-        $(function(){
+ $(function(){
             var canvas = document.getElementById("canvas");
-            var canvas2 = document.getElementById("canvas2");
-            var ctx = canvas.getContext("2d");
-            var ctxBoard = canvas2.getContext("2d");         
+            var ctx = canvas.getContext("2d");     
             var leftDown = false;
             var rightDown = false;
-            var upDown = false;
-            var downDown = false;
-            var aDown = false;
-            var zDown = false;
             var offset = $("#canvas").offset();
             var oX = offset.left;
             var oY = offset.top;
             var width = 800;
-            var height = 2000;
+            var height = 600;
             var carX = oX + 150;
             var carY = canvas.height - 150;
             var widthCar = 100;
@@ -36,22 +30,9 @@ canvas {
             var move = 4
             var target = 0
             var action = 15;
-            var speeding = 2;
             var objX = 0
             var objY = 0
-            var widthObject = 150
-
-            var points = 0
-            var objdestroyed = 0
-            var widthBonus = 30
-            var bonusX = 0
-            var bonusY = 0
-            var bonusHit = 0
-            var bulletWidth = 10
-            var rotate = 1;
-            var counter = 0;
-            var leftOrRight = 1;
-            var changeturn = 0
+            var widthObject = 100
 
             function Wheel(x, y) {
                 ctx.beginPath();
@@ -75,9 +56,8 @@ canvas {
                 ctx.fill();
             }
 
-            function carAction(m,sp) {
-                carX += m
-                carY += sp       
+            function carAction(m) {
+                carX += m       
                 Wheels()
                 ctx.beginPath();
                 ctx.fillStyle = "silver";
@@ -108,7 +88,7 @@ canvas {
             }
 
             function Obj() {
-                objX = Math.floor(Math.random() * 700) + oX;  
+                objX = Math.floor(Math.random() * 500) + oX;  
                 objY = 0;
                 target = 1;
             }
@@ -124,7 +104,7 @@ canvas {
                 ctx.fill();
                 ctx.stroke();
 
-                objY += move
+                objY += move - 0.1
                 if (objY >= oY + height) {
                     target = 0
                 }
@@ -147,145 +127,28 @@ canvas {
 
                 return false
             }
-
-            function ScoreTable() {
-                ctxBoard.clearRect(0, 0, canvas2.width, canvas2.height);
-                ctxBoard.beginPath();            
-                ctxBoard.fillStyle = "white" 
-                ctxBoard.font = "20px Times New Roman";             
-                ctxBoard.fillText("Points: " + points , 10, 30);
-                ctxBoard.fillText("Destroyed: " + objdestroyed , 10, 60);
-                ctxBoard.fillText("Speed: " + move , 10, 90);
-                ctxBoard.fillText("a - do przodu, z - do tyłu" , 10, 120);
-                ctxBoard.fillText("< - w lewo, > - w prawo" , 10, 140);
-                ctxBoard.fillText("Strzałki góra/dół są do przyśpieszania." , 10, 160);
-               
-                ctxBoard.stroke();
-            }
-            function BonusDisplay() {
-                if (bonusHit == 0) {
-                    initializeBonus();
-                }
-                ctx.beginPath();
-                ctx.fillStyle = "blue";
-                ctx.rect(bonusX, bonusY, widthBonus, widthBonus);
-                ctx.fill();
-                ctx.stroke();
-                bonusY += move - 0.1
-                if (bonusY >= oY + height) {
-                    bonusHit = 0
-                }
-            }
-
-            function initializeBonus() {
-                do {
-                    bonusX = Math.floor(Math.random() * 700) + oX;
-                } while (bonusX <= objX + widthObject && bonusX + widthBonus >= objX) 
-                
-                bonusY = 0;
-                bonusHit = 1
-            }
-
-            function BonusHit() {
-                if (carX - widthWheel < bonusX + widthBonus && 
-                    carX + widthCar + widthWheel > bonusX && 
-                    carY <= bonusY + widthBonus - move && 
-                    carY + widthCar >= bonusY) {
-                    return true
-                }
-                return false
-            }
-            function shootedObj(x, y) {
-                if (x - bulletWidth < objX + widthObject && x + bulletWidth > objX && y <= objY + widthObject) {
-                    target = 0;
-                    objdestroyed++;
-                    return true
-                }
-                return false
-            }
-
-            function Fire(x,y) {
-                ctx.beginPath();
-                ctx.fillStyle = "yellow";
-                y -= action
-                ctx.arc(x, y, bulletWidth , 0, 2 * Math.PI);
-                ctx.fill()
-                ctx.closePath();
-
-                if (y > oY) {      
-                    setTimeout(function() {
-                        requestAnimationFrame(function() {
-                            if (shootedObj(x, y)) {
-                                return 
-                            }
-                            Fire(x, y);
-                        }
-                    )}, 1);
-                }
-            }
-
-            function rotation() {
-                if (counter >= 20) {
-                    if (leftOrRight == 0) {
-                        r = Math.floor(Math.random() * 10)
-                        if (r > 4)
-                            leftOrRight = -1
-                        else 
-                            leftOrRight = 1;           
-                    }
-
-                    if (rotate < 20) {   
-                        rotate += 0.1; 
-                        ctx.translate(400, 400);
-                        ctx.rotate(leftOrRight * 0.1 * Math.PI / 180);
-                        ctx.translate(-400, -400);                   
-                    } else {
-                        counter = 0;
-                        rotate = 0;
-                        leftOrRight = 0;
-                    }
-                } else {
-
-                    counter += 0.1;
-                }
-            }
-
             function start() {
                 if (line > 150) {
                     line = 0
+                    move += 0.1
                 }
                 line += move
-                
-                
-                ScoreTable();
-                rotation();
-                Road();
-                LinesDisplay();
-                ObjDisplay();
-                BonusDisplay();        
-                carAction(0,0);
-                
 
                 if (objectHit()) {
                     return
                 }
-                if (BonusHit()) {
-                    initializeBonus()
-                    points++;
-                }
+
+                Road();
+                LinesDisplay();
+                ObjDisplay();
+                carAction(0);
 
                 if (leftDown) {
                     if (carX > oX)
-                        carAction(-action,0);                     
+                        carAction(-action);                     
                 } else if (rightDown) {
                     if (carX < (canvas.width - widthCar))
-                        carAction(action,0);                   
-                } else if (aDown) {       
-                    if (carY > oY)         
-                        carAction(0,-speeding);                   
-                } else if (zDown) {   
-                    if (carY < (canvas.height - widthCar))             
-                        carAction(0,speeding);                   
+                        carAction(action);                   
                 }
                 requestAnimationFrame(start);
             }
@@ -297,49 +160,23 @@ canvas {
                 e = e || window.event;
 
                 if (e.keyCode == '37') 
-                    leftDown = true            
+                        leftDown = true            
                 else if (e.keyCode == '39') 
-                    rightDown = true   
-                else if (e.keyCode == '38') { 
-                    upDown = true
-                    move += 0.5   
-                }
-                else if (e.keyCode == '40') { 
-                    downDown = true
-                    if(move > 0)
-                        move -= 0.5        
-                }
-                else if (e.keyCode == '65') { 
-                    aDown = true;  
-                }  
-                else if (e.keyCode == '90') { 
-                    zDown = true;     
-                }  
-                else if (e.keyCode == '32') { 
-                    Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
-                }                         
+                    rightDown = true                              
             }
 
             function keyUp(e) {
                 if (e.keyCode == '37')
                     leftDown = false;           
                 else if (e.keyCode == '39') 
-                    rightDown = false;
-                else if (e.keyCode == '38')
-                    upDown = false;                                    
-                else if (e.keyCode == '40') 
-                    downDown = false;  
-                else if (e.keyCode == '65')
-                    aDown = false;                  
-                else if (e.keyCode == '90') 
-                    zDown = false;   
+                    rightDown = false;            
             }
 
             start();
         });
 
+
     </script>
-    <canvas id="canvas2" width=800 height=200></canvas><br> 
     <canvas id="canvas" width=800 height=600></canvas>
 </body>
 </html>
