@@ -37,6 +37,7 @@ canvas {
             var carWindowWidth = 75
             var carWindowHeight = 25
             var jumped = 1
+            var jumpAction = 20
             function CarWindow(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
@@ -160,43 +161,71 @@ canvas {
                 return false
             }
 
-            function Jump() {
-                CarJump(carY);  
-                CarFall(carY);                           
-            }
+            // function Jump() {
+            //     CarJump(carY);  
+            //     CarFall(carY);                           
+            // }
 
-            function CarJump(y) {
+            // function CarJump(y) {
+            //     if (jumped == 1) {
+            //         y -= action
+            //         carY = y
+
+            //         if(y > (height / 2)) { 
+            //             setTimeout(function() {
+            //                 requestAnimationFrame(function() {
+            //                     CarJump(y);
+            //                 }
+            //             )}, 1);          
+            //         } else {
+            //             jumped = 0;
+            //         }
+            //     } 
+            // }
+            // function CarFall(y) {
+            //     if (jumped == 0) {
+            //         y += action
+            //         carY = y
+
+            //         if(y < carFloor) { 
+            //             setTimeout(function() {
+            //                 requestAnimationFrame(function() {
+            //                     CarFall(y);
+            //                 }
+            //             )}, 1);  
+            //         } else {
+            //             jumped = 1;
+            //         }        
+                    
+            //     } 
+            // }
+
+            function CarJump(y ,a) {        
                 if (jumped == 1) {
-                    y -= action
+                    y -= a
                     carY = y
 
                     if(y > (height / 2)) { 
                         setTimeout(function() {
                             requestAnimationFrame(function() {
-                                CarJump(y);
+                                CarJump(y,a);
                             }
                         )}, 1);          
                     } else {
-                        jumped = 0;
-                    }
-                } 
-            }
-            function CarFall(y) {
-                if (jumped == 0) {
-                    y += action
-                    carY = y
-
-                    if(y < carFloor) { 
                         setTimeout(function() {
                             requestAnimationFrame(function() {
-                                CarFall(y);
+                                CarJump(y,-a);
                             }
-                        )}, 1);  
-                    } else {
-                        jumped = 1;
-                    }        
-                    
-                } 
+                        )}, 1); 
+                    } 
+                }
+                
+                if(y > carFloor){
+                    carY = carFloor
+                    jumped = 0
+                    return;
+                }
+
             }
 
             function start() {
@@ -236,7 +265,8 @@ canvas {
                 else if (e.keyCode == '39') 
                     rightDown = true
                 else if (e.keyCode == '32') { 
-                    Jump();     
+                    jumped = 1
+                    CarJump(carY,action);
                 }                                
             }
 
