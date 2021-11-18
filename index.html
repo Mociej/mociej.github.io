@@ -51,7 +51,7 @@ canvas {
 
             function Road(){
                 ctx.clearRect(0, 0, width, height);
-                ctx.fillStyle = "grey";
+                ctx.fillStyle = "black";
                 ctx.rect(oX, oY, width, height);
                 ctx.fill();
             }
@@ -69,12 +69,12 @@ canvas {
             function Sides(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "white";
-                ctx.rect(x, y, widthLine, heightLine / 2);
+                ctx.rect(y, x, widthLine, heightLine / 2);
                 ctx.fill();
                 ctx.stroke();
                 ctx.beginPath();
                 ctx.fillStyle = "red";
-                ctx.rect(x, y + heightLine / 2, widthLine, heightLine / 2);
+                ctx.rect(y, x + heightLine / 2, widthLine, heightLine / 2);
                 ctx.fill();
                 ctx.stroke();
             }
@@ -82,7 +82,7 @@ canvas {
             function Center(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "white";
-                ctx.rect(x, y, widthLine, heightLine);
+                ctx.rect(y, x, widthLine, heightLine);
                 ctx.fill();
                 ctx.stroke();
             }
@@ -104,16 +104,14 @@ canvas {
                 ctx.fill();
                 ctx.stroke();
 
-                objY += move - 0.1
-                if (objY >= oY + height) {
+                objX += move - 0.1
+                if (objX >= oX + width) {
                     target = 0
                 }
             }
             function LinesDisplay() {
                 for (i = line; i < oY + height; i += 150) {
                     Sides(oX + 5, i);
-                    Center(oX + (width / 2) - 5, i);
-                    Sides(oX + width - 25, i);
                 }
             }
 
