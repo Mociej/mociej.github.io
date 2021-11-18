@@ -19,9 +19,10 @@ canvas {
             var oX = offset.left;
             var oY = offset.top;
             var width = 800;
-            var height = 600;
+            var height = 600;        
             var carX = oX + 650;
             var carY = canvas.height - 140;
+            var carFloor = canvas.height - 140;
             var widthCar = 100;
             var widthWheel = 15
             var widthLine = 40;
@@ -35,7 +36,7 @@ canvas {
             var widthObject = 50
             var carWindowWidth = 75
             var carWindowHeight = 25
-            var jumped = 0
+            var jumped = 1
             function CarWindow(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
@@ -160,29 +161,40 @@ canvas {
             }
 
             function Jump() {
-                if (jumped == 0) {
-                    console.log("jump!");
-                    jumped = 1;
-
-                } else {
-                    console.log("no jump!");
-                    jumped = 0;
-                }
                 CarJump(carY);  
+                CarFall(carY);                           
             }
 
             function CarJump(y) {
                 if (jumped == 1) {
-
                     y -= action
-
                     carY = y
 
-                    setTimeout(function() {
-                        requestAnimationFrame(function() {
-                            CarJump(y);
-                        }
-                    )}, 1);
+                    if(y > (height / 2)) { 
+                        setTimeout(function() {
+                            requestAnimationFrame(function() {
+                                CarJump(y);
+                            }
+                        )}, 1);          
+                    } else {
+                        jumped = 0;
+                    }
+                } 
+            }
+            function CarFall(y) {
+                if (jumped == 0) {
+                    y += action
+                    carY = y
+
+                    if(y < carFloor) { 
+                        setTimeout(function() {
+                            requestAnimationFrame(function() {
+                                CarFall(y);
+                            }
+                        )}, 1);  
+                    } else {
+                        jumped = 1;
+                    }        
                     
                 } 
             }
