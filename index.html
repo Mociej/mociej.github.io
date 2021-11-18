@@ -32,7 +32,7 @@ canvas {
             var action = 15;
             var objX = 0
             var objY = 0
-            var widthObject = 100
+            var widthObject = 50
             var carWindowWidth = 75
             var carWindowHeight = 25
 
@@ -111,8 +111,8 @@ canvas {
             }
 
             function Obj() {
-                objX = Math.floor(Math.random() * 500) + oX;  
-                objY = 0;
+                objX = 0;  
+                objY = 520;
                 target = 1;
             }
 
@@ -138,9 +138,19 @@ canvas {
                 }
             }
 
+            // function objectHit() {
+            //     if (carX - widthWheel < objX + widthObject && 
+            //         carX + widthCar + widthWheel > objX && 
+            //         carY <= objY + widthObject - move && 
+            //         carY + widthCar >= objY) {
+            //         return true
+            //     }
+
+            //     return false
+            // }
             function objectHit() {
-                if (carX - widthWheel < objX + widthObject && 
-                    carX + widthCar + widthWheel > objX && 
+                if (carX < objX + widthObject && 
+                    carX + widthCar > objX && 
                     carY <= objY + widthObject - move && 
                     carY + widthCar >= objY) {
                     return true
