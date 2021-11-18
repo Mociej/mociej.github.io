@@ -24,8 +24,8 @@ canvas {
             var carY = canvas.height - 140;
             var widthCar = 100;
             var widthWheel = 15
-            var widthLine = 15;
-            var heightLine = 80;
+            var widthLine = 40;
+            var heightLine = 15;
             var line = 0
             var move = 4
             var target = 0
@@ -92,12 +92,12 @@ canvas {
             function Sides(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "white";
-                ctx.rect(y, x, widthLine, heightLine / 2);
+                ctx.rect(y, x, widthLine, heightLine);
                 ctx.fill();
                 ctx.stroke();
                 ctx.beginPath();
                 ctx.fillStyle = "red";
-                ctx.rect(y, x + heightLine / 2, widthLine, heightLine / 2);
+                ctx.rect(y + widthLine, x, widthLine, heightLine);
                 ctx.fill();
                 ctx.stroke();
             }
@@ -133,8 +133,8 @@ canvas {
                 }
             }
             function LinesDisplay() {
-                for (i = line; i < oY + height; i += 150) {
-                    Sides(oX + 5, i);
+                for (i = line - 50; i < oY + width; i += 150) {
+                    Sides(oX + 560, i);
                 }
             }
 
