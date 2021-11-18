@@ -35,7 +35,7 @@ canvas {
             var widthObject = 50
             var carWindowWidth = 75
             var carWindowHeight = 25
-
+            var jumped = 0
             function CarWindow(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
@@ -158,6 +158,35 @@ canvas {
 
                 return false
             }
+
+            function Jump() {
+                if (jumped == 0) {
+                    console.log("jump!");
+                    jumped = 1;
+
+                } else {
+                    console.log("no jump!");
+                    jumped = 0;
+                }
+                CarJump(carY);  
+            }
+
+            function CarJump(y) {
+                if (jumped == 1) {
+
+                    y -= action
+
+                    carY = y
+
+                    setTimeout(function() {
+                        requestAnimationFrame(function() {
+                            CarJump(y);
+                        }
+                    )}, 1);
+                    
+                } 
+            }
+
             function start() {
                 if (line > 150) {
                     line = 0
@@ -193,7 +222,10 @@ canvas {
                 if (e.keyCode == '37') 
                         leftDown = true            
                 else if (e.keyCode == '39') 
-                    rightDown = true                              
+                    rightDown = true
+                else if (e.keyCode == '32') { 
+                    Jump();     
+                }                                
             }
 
             function keyUp(e) {
