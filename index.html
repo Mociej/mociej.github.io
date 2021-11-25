@@ -39,7 +39,7 @@ canvas {
             var jumped = 1
             var jumpAction = 5
             var bulletWidth = 10
-            
+            var audio = new Audio('pewpew.mp3');
             
             function CarWindow(x, y) {
                 ctx.beginPath();
@@ -212,7 +212,6 @@ canvas {
             }
 
             function playSound(){
-                audio = new Audio('pewpew.mp3');
                 audio.play();
             }
 
@@ -257,7 +256,8 @@ canvas {
                     CarJump(carY,jumpAction);
                 }
                 else if (e.keyCode == '67') { 
-                    Fire(carX - widthCar/2 + widthCar/3, carY + widthCar);    
+                    if(audio.paused)
+                        Fire(carX - widthCar/2 + widthCar/3, carY + widthCar);    
                 }  
                                
             }
