@@ -39,6 +39,7 @@ canvas {
             var jumped = 1
             var jumpAction = 5
             var bulletWidth = 10
+            var points = 0
             var audio = new Audio('pewpew.mp3');
             
             function CarWindow(x, y) {
@@ -117,7 +118,8 @@ canvas {
 
             function Obj() {
                 objX = 0;  
-                objY = 520;
+                objY = Math.floor(Math.random() * 200) + 350;
+               
                 target = 1;
             }
 
@@ -183,8 +185,9 @@ canvas {
 
             }
             function shootedObj(x, y) {
-                if (x - bulletWidth < objX + widthObject && x + bulletWidth > objX && y <= objY + widthObject) {
+                if (x  < objX + widthObject && x + bulletWidth > objX && y < objY + widthObject && y + bulletWidth > objY ) {
                     target = 0;
+                    points += 10;
                     return true
                 }
                 return false
@@ -215,6 +218,14 @@ canvas {
                 audio.play();
             }
 
+            function ScoreTable() {
+                ctx.beginPath();            
+                ctx.fillStyle = "white" 
+                ctx.font = "20px Times New Roman";             
+                ctx.fillText("Points: " + points , 10, 30);
+                ctx.stroke();
+            }
+
             function start() {
                 if (line > 150) {
                     line = 0
@@ -230,7 +241,8 @@ canvas {
                 LinesDisplay();
                 ObjDisplay();
                 carAction(0);
-
+                ScoreTable();
+                
                 if (leftDown) {
                     if (carX > oX)
                         carAction(-action);                     
