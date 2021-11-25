@@ -39,7 +39,8 @@ canvas {
             var jumped = 1
             var jumpAction = 5
             var bulletWidth = 10
-
+            var audio = new Audio('pewpew.mp3');
+            
             function CarWindow(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
@@ -203,10 +204,15 @@ canvas {
                             if (shootedObj(x, y)) {
                                 return 
                             }
+                            playSound();   
                             Fire(x, y);
                         }
                     )}, 1);
                 }
+            }
+
+            function playSound(){
+                audio.play();
             }
 
             function start() {
@@ -250,7 +256,7 @@ canvas {
                     CarJump(carY,jumpAction);
                 }
                 else if (e.keyCode == '67') { 
-                    Fire(carX - widthCar/2 + widthCar/3, carY + widthCar);       
+                    Fire(carX - widthCar/2 + widthCar/3, carY + widthCar);    
                 }                                 
             }
 
@@ -266,6 +272,7 @@ canvas {
 
 
     </script>
-    <canvas id="canvas" width=800 height=600></canvas>
+    <canvas id="canvas" width=800 height=600>
+    </canvas>
 </body>
 </html>
