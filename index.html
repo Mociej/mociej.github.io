@@ -192,12 +192,12 @@ canvas {
             function Fire(x,y) {
                 ctx.beginPath();
                 ctx.fillStyle = "yellow";
-                y -= action
+                x -= action
                 ctx.arc(x, y, bulletWidth , 0, 2 * Math.PI);
                 ctx.fill()
                 ctx.closePath();
 
-                if (y > oY) {      
+                if (x > oX) {      
                     setTimeout(function() {
                         requestAnimationFrame(function() {
                             if (shootedObj(x, y)) {
@@ -250,7 +250,7 @@ canvas {
                     CarJump(carY,jumpAction);
                 }
                 else if (e.keyCode == '67') { 
-                    Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
+                    Fire(carX - widthCar/2 + widthCar/3, carY + widthCar);       
                 }                                 
             }
 
