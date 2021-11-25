@@ -38,6 +38,8 @@ canvas {
             var carWindowHeight = 25
             var jumped = 1
             var jumpAction = 5
+            var bulletWidth = 10
+
             function CarWindow(x, y) {
                 ctx.beginPath();
                 ctx.fillStyle = "blue";
@@ -179,6 +181,33 @@ canvas {
                 }
 
             }
+            function shootedObj(x, y) {
+                if (x - bulletWidth < objX + widthObject && x + bulletWidth > objX && y <= objY + widthObject) {
+                    target = 0;
+                    return true
+                }
+                return false
+            }
+
+            function Fire(x,y) {
+                ctx.beginPath();
+                ctx.fillStyle = "yellow";
+                y -= action
+                ctx.arc(x, y, bulletWidth , 0, 2 * Math.PI);
+                ctx.fill()
+                ctx.closePath();
+
+                if (y > oY) {      
+                    setTimeout(function() {
+                        requestAnimationFrame(function() {
+                            if (shootedObj(x, y)) {
+                                return 
+                            }
+                            Fire(x, y);
+                        }
+                    )}, 1);
+                }
+            }
 
             function start() {
                 if (line > 150) {
@@ -219,7 +248,10 @@ canvas {
                 else if (e.keyCode == '32') { 
                     jumped = 1
                     CarJump(carY,jumpAction);
-                }                                
+                }
+                else if (e.keyCode == '67') { 
+                    Fire(carX + (widthCar / 2), carY - bulletWidth - 2);       
+                }                                 
             }
 
             function keyUp(e) {
